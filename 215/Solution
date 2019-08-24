@@ -1,0 +1,8 @@
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int m = nums.length - k;
+        Arrays.sort(nums);
+        return nums[m];
+    }
+}
+//O(N lg K) running time + O(K) memory
