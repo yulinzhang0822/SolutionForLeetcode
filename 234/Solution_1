@@ -1,0 +1,39 @@
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        //count number of nodes
+        int len = 0;
+        ListNode tmp = head;
+        while(tmp!=null) {
+            len++;
+            tmp = tmp.next;
+        }
+        tmp = head;
+        
+        //find the head of the second half of the list
+        len /= 2;
+        while(len>0) {
+            tmp = tmp.next;
+            len--;
+        }
+        
+        //reverse the second half of the list
+        ListNode temp = null, secHead = tmp;
+        while(tmp!=null) {
+            ListNode node = tmp.next;
+            tmp.next = temp;
+            temp = tmp;
+            tmp = node;
+        }
+        
+        //judge if two of the half is the same
+        while(head!=secHead) {
+            if(temp.val!=head.val) {
+                return false;
+            }
+            temp = temp.next;
+            head = head.next;
+        }
+        return true;
+    }
+}
+//Time:O(n), Space:O(1)
