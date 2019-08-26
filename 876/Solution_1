@@ -1,0 +1,14 @@
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        if(head.next==null) {
+            return head;
+        }
+        ListNode cur = head, pre = head;
+        while(cur!=null&&cur.next!=null) {
+            cur = cur.next.next;
+            pre = pre.next;
+        }
+        return pre;
+    }
+}
+//Time:O(n), Space:O(1)
