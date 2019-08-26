@@ -1,0 +1,29 @@
+class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode curA = headA, curB = headB;
+        boolean flagA = false, flagB = false;
+        while(!flagA||!flagB) {
+            curA = curA.next;
+            if(curA==null) {
+                curA = headB;
+                flagA = true;
+            }
+            curB = curB.next;
+            if(curB==null) {
+                curB = headA;
+                flagB = true;
+            }
+        }
+        while(curA!=null&&curB!=null) {
+            if(curA==curB) {
+                return curA;
+            }
+            curA = curA.next;
+            curB = curB.next;
+        }
+        return null;
+    }
+}
