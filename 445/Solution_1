@@ -1,0 +1,42 @@
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        Stack<Integer> stack1 = new Stack<>();
+        Stack<Integer> stack2 = new Stack<>();
+        while(l1!=null||l2!=null){
+            if(l1!=null){
+                stack1.push(l1.val);
+                l1 = l1.next;
+            }
+            if(l2!=null){
+                stack2.push(l2.val);
+                l2 = l2.next;
+            }
+        }
+        Stack<Integer> sum = new Stack<>();
+        int total = 0, carry = 0;
+        while(!stack1.isEmpty()&&!stack2.isEmpty()){
+            total = stack1.pop()+stack2.pop()+carry;
+            carry = total/10;
+            sum.push(total%10);
+        }
+        while(!stack1.isEmpty()){
+            total = stack1.pop()+carry;
+            carry = total/10;
+            sum.push(total%10);
+        }
+        while(!stack2.isEmpty()){
+            total = stack2.pop()+carry;
+            carry = total/10;
+            sum.push(total%10);
+        }
+        if(carry==1){
+            sum.push(1);
+        }
+        ListNode dummyHead = new ListNode(0), curr = dummyHead;
+        while(!sum.isEmpty()){
+            curr.next = new ListNode(sum.pop());
+            curr = curr.next;
+        }
+        return dummyHead.next;
+    }
+}
