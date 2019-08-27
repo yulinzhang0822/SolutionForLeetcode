@@ -1,0 +1,100 @@
+//Doubly Linked List
+class MyLinkedList {
+    
+    class Node {
+        int val;
+        Node next;
+        Node prev;
+        
+        public Node (int val) {
+            this.val = val;
+        }
+    }
+    
+    private Node dHead;
+    private Node dTail;
+    private int size;
+
+    /** Initialize your data structure here. */
+    public MyLinkedList() {
+        dHead = new Node(0);
+        dTail = new Node(0);
+        dHead.next = dTail;
+        dTail.prev = dHead;
+        size = 0;
+    }
+    
+    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+    public int get(int index) {
+        if (index < 0 || size <= index) {
+            return -1;
+        }
+        
+        Node ptr = dHead;
+        while (index >= 0) {
+            ptr = ptr.next;
+            index--;
+        }
+        
+        return ptr.val;
+    }
+
+    /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+    public void addAtHead(int val) {
+        addAtIndex(0, val);
+    }
+    
+    /** Append a node of value val to the last element of the linked list. */
+    public void addAtTail(int val) {
+        addAtIndex(size, val);
+    }
+    
+    /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+    public void addAtIndex(int index, int val) {
+        // If index is greater than the length, the node will not be inserted
+        if (size < index) {
+            return;
+        }
+        
+        // If index is negative, the node will be inserted at the head of the list
+        if (index < 0) {
+            index = 0;
+        }
+        
+        Node ptr = dHead;
+        while (index>0) { 
+            ptr = ptr.next;
+            index--;
+        }
+        // ptr points to (index - 1)-th node
+        Node newNode = new Node(val);
+        Node ptrNext = ptr.next;
+        
+        ptr.next = newNode;
+        newNode.prev = ptr;
+        newNode.next = ptrNext;
+        ptrNext.prev = newNode;
+        
+        size++;
+    }
+    
+    /** Delete the index-th node in the linked list, if the index is valid. */  // h 1 t
+    public void deleteAtIndex(int index) {
+        if (index < 0 || size <= index) {
+            return;
+        }
+        
+        Node ptr = dHead;
+        while (index>0) {
+            ptr = ptr.next;
+            index--;
+        }
+        
+        // ptr points to (index - 1)-th node
+        Node newPtrNext = ptr.next.next;
+        ptr.next = newPtrNext;
+        newPtrNext.prev = ptr;
+        
+        size--;
+    }
+}
