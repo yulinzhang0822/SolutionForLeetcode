@@ -1,0 +1,48 @@
+class Solution {
+    public ListNode sortList(ListNode head) {
+        int size = 0;
+        ListNode p = head;
+        while (p!=null){
+            size ++;
+            p = p.next;
+        }
+        return merge(head, size);
+    }
+    
+    public ListNode merge(ListNode head, int size){
+        if (size <= 1){
+            return head;
+        }
+        ListNode p = head;
+        int mid = (size+size%2)/2-1;
+        while (mid > 0){
+            p = p.next;
+            mid --;
+        }
+        ListNode q = p.next;
+        p.next = null;
+        ListNode left = merge(head, (size+size%2)/2);
+        ListNode right = merge(q, (size+size%2)/2-size%2);
+        ListNode dummyHead = new ListNode(-1);
+        p = dummyHead;
+        while (left!=null || right!=null){
+            if (left == null){
+                p.next = right;
+                break;
+            }
+            if (right == null){
+                p.next = left;
+                break;
+            }
+            if (left.val <= right.val){
+                p.next = left;
+                left = left.next;
+            }else {
+                p.next = right;
+                right = right.next;
+            }
+            p = p.next;
+        }
+        return dummyHead.next;
+    }
+}
