@@ -1,0 +1,22 @@
+public class Solution {
+    public boolean canJumpFromPosition(int position, int[] nums) {
+        if (position == nums.length - 1) {
+            return true;
+        }
+
+        int furthestJump = Math.min(position + nums[position], nums.length - 1);
+        for (int nextPosition = position + 1; nextPosition <= furthestJump; nextPosition++) {
+        //for (int nextPosition = furthestJump; nextPosition > position; nextPosition--) {
+            if (canJumpFromPosition(nextPosition, nums)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean canJump(int[] nums) {
+        return canJumpFromPosition(0, nums);
+    }
+}
+//Time:O(2^n), Space:O(n)
