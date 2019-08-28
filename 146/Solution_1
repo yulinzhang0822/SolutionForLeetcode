@@ -1,0 +1,86 @@
+//LRU Cache
+class LRUCache {
+
+  private class Node {
+    int key = 0;
+    int val = 0;
+    Node prev = null;
+    Node next = null;
+    Node(int key, int val) {
+      this.key = key;
+      this.val = val;
+    }
+  }
+
+  private int capacity = 0;
+  private Node head = null;
+  private Node tail = null;
+  private HashMap<Integer, Node> hashMap = new HashMap<>();
+
+  public LRUCache(int capacity) {
+    this.capacity = capacity;
+  }
+  
+  public int get(int key) {
+    if (!hashMap.containsKey(key)) return -1;
+    else {
+      // find node
+      Node node = hashMap.get(key);
+      // check if we need to do anything
+      if (node != head) {
+        // deal with tail
+        if (node == tail) tail = node.prev;
+        // move to the front
+        if (node.prev != null) node.prev.next = node.next;
+        if (node.next != null) node.next.prev = node.prev;
+        node.prev = null;
+        node.next = head;
+        if (head != null) head.prev = node;
+        head = node;
+        if (tail == null) tail = node;
+      }
+      return node.val;
+    }
+  }
+  
+  public void put(int key, int value) {
+    Node node;
+    // check if key is already in
+    if (hashMap.containsKey(key)) {
+      node = hashMap.get(key);
+      node.val = value;
+    } else {
+      node = new Node(key, value);
+      hashMap.put(key, node);
+    }
+    // move node to the front
+    // check if we need to do anything
+    if (node != head) {
+      // deal with tail
+      if (node == tail) tail = node.prev;
+      // move to the front
+      if (node.prev != null) node.prev.next = node.next;
+      if (node.next != null) node.next.prev = node.prev;
+      node.prev = null;
+      node.next = head;
+      if (head != null) head.prev = node;
+      head = node;
+      if (tail == null) tail = node;
+    }
+    // deal with cache invalidate
+    if (hashMap.size() > capacity) {
+      Node toDelete = tail;
+      tail = tail.prev;
+      tail.next = null;
+      toDelete.prev = null;
+      hashMap.remove(toDelete.key);
+    }
+  }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
