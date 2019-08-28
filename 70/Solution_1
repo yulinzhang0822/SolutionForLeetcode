@@ -1,3 +1,4 @@
+//Fibonacci Number
 class Solution {
     public int climbStairs(int n) {
         // base cases
@@ -17,3 +18,4 @@ class Solution {
         return all_ways;
     }
 }
+//Time:O(n), Space:O(1)
