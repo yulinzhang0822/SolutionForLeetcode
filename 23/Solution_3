@@ -1,0 +1,24 @@
+//Brute Force
+public class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        List<Integer> x = new ArrayList<>();
+        for(int i = 0; i < lists.length; i++) {
+            ListNode temp = lists[i];
+            while(temp != null) {
+                x.add(temp.val);
+                temp = temp.next;
+            }
+        }
+        Object[] y = x.toArray();
+        Arrays.sort(y);
+        ListNode head = new ListNode(-1);
+        ListNode temp = head;
+        for(int i = 0; i < y.length; i++) {
+            ListNode newVal = new ListNode((int)y[i]);
+            temp.next = newVal;
+            temp = temp.next;
+        }
+        return head.next;
+    }
+}
+//Time:O(NlogN), Space:O(N)
