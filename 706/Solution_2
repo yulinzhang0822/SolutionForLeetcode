@@ -1,0 +1,82 @@
+class MyHashMap {
+    
+    class Node {
+        int key;
+        int value;
+        Node next;
+        Node(int key, int value){
+            this.key = key;
+            this.value = value;
+        }
+    }
+    
+    private Node head;
+    private int size;
+
+    /** Initialize your data structure here. */
+    public MyHashMap() {
+        head = null;
+        size = 0;
+    }
+    
+    /** value will always be non-negative. */
+    public void put(int key, int value) {
+        if(size==0){
+            head = new Node(key, value);
+            size++;
+        } else{
+            Node curr = head, prev = null;
+            while(curr!=null){
+                if(curr.key==key){
+                    curr.value = value;
+                    break;
+                }
+                prev = curr;
+                curr = curr.next;
+            }
+            if(curr==null){
+                curr = new Node(key, value);
+                prev.next = curr;
+                size++;
+            }
+        }
+    }
+    
+    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+    public int get(int key) {
+        if(size==0){
+            return -1;
+        }
+        Node curr = head;
+        while(curr!=null){
+            if(curr.key==key){
+                return curr.value;
+            }
+            curr = curr.next;
+        }
+        return -1;
+    }
+    
+    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+    public void remove(int key) {
+        Node curr = head, prev = null;
+        if(size==1&&curr.key==key){
+            head = null;
+            size--;
+            return;
+        }
+        while(curr!=null){
+            if(curr.key==key){
+                if(curr==head){
+                    head = head.next;
+                    break;
+                }
+                prev.next = curr.next;
+                size--;
+                break;
+            }
+            prev = curr;
+            curr = curr.next;
+        }
+    }
+}
