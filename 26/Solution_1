@@ -1,0 +1,19 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums==null||nums.length==0){
+            return 0;
+        }
+        if(nums.length==1){
+            return 1;
+        }
+        int pos = 1, cur = nums[0];
+        for(int i=1; i<nums.length; i++){
+            if(nums[i]!=cur){
+                nums[pos++] = nums[i];
+                cur = nums[i];
+            }
+        }
+        return pos;
+    }
+}
+//Time:O(n), Space:O(1)
