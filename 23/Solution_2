@@ -16,3 +16,4 @@ public class Solution {
         return head.next;
     }
 }
+//Time:O(Nlogk), Space:O(n)
