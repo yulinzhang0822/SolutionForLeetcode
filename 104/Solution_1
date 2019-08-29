@@ -1,0 +1,28 @@
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null) {
+            return 0;
+        }
+        int depth = 1;
+        Stack<TreeNode> stack = new Stack<>();
+        Stack<Integer> dp = new Stack<>();
+        stack.push(root);
+        dp.push(depth);
+        while(!stack.isEmpty()) {
+            TreeNode tmp = stack.pop();
+            int tmpdp = dp.pop();
+            if(tmp.left!=null) {
+                depth = Math.max(depth,tmpdp+1);
+                stack.push(tmp.left);
+                dp.push(tmpdp+1);
+            }
+            if(tmp.right!=null) {
+                depth = Math.max(depth,tmpdp+1);
+                stack.push(tmp.right);
+                dp.push(tmpdp+1);
+            }
+        }
+        return depth;
+    }
+}
+//Time:O(k), Space:O(k), k is the number of nodes in the tree
