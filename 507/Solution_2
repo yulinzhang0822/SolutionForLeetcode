@@ -1,0 +1,16 @@
+import java.lang.Math;
+
+class Solution {
+    public boolean checkPerfectNumber(int num) {
+        if(num==0||num==1) {
+            return false;
+        }
+        double lar = Math.sqrt(num), sum = 1;
+        for(double i=2; i<=lar; i++) {
+            if(num%i==0) {
+                sum = sum + i + num/i;
+            }
+        }
+        return sum==num;
+    }
+}
