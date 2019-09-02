@@ -1,0 +1,28 @@
+//The the basic idea is to take the last element in postorder array as the root, find the position of the root in the 
+//inorder array; then locate the range for left sub-tree and right sub-tree and do recursion. Use a HashMap to record 
+//the index of root in the inorder array.
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        Map<Integer, Integer> inMap = new HashMap<Integer, Integer>();
+
+        for(int i = 0; i < inorder.length; i++) {
+            inMap.put(inorder[i], i);
+        }
+
+        TreeNode root = buildTree(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1, inMap);
+        return root;
+    }
+
+    public TreeNode buildTree(int[] inorder, int inStart, int inEnd, int[] postorder, int postStart, int postEnd, Map<Integer, Integer> inMap) {
+        if(inStart > inEnd || postStart > postEnd) return null;
+        
+        TreeNode root = new TreeNode(postorder[postEnd]);
+        int inRoot = inMap.get(root.val);
+        int numsRight = inEnd - inRoot;
+
+        root.left = buildTree(inorder, inStart, inRoot - 1, postorder, 0, postEnd - numsRight - 1, inMap);
+        root.right = buildTree(inorder, inRoot + 1, inEnd, postorder, postEnd - numsRight, postEnd-1, inMap);
+
+        return root;
+    }
+}
